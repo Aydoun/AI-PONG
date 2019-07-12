@@ -36,8 +36,7 @@ li div:first-of-type, li div:last-of-type {
     flex-shrink: 0;
 }
 
-/* ---- GAME STUFF ----- */
-
+/* ---- GAME STUFF 123 ----- */
 .highscores {
     margin-top: 1px;
     margin-left: 1em;
@@ -49,9 +48,6 @@ li div:first-of-type, li div:last-of-type {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
-
-
-
 
 .highscores h2 {
     text-align: center;
@@ -66,7 +62,6 @@ height: 800px;
 
 #video {
     transform: scaleX(-1);
-
 }
 
 #output {

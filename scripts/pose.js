@@ -28,19 +28,10 @@ function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
  * Draws a pose skeleton by looking up all adjacent keypoints/joints
  */
 function drawSkeleton(keypoints, minConfidence, ctx, scale = 1) {
-  const adjacentKeyPoints = posenet.getAdjacentKeyPoints(
-    keypoints,
-    minConfidence
-  );
+  const adjacentKeyPoints = posenet.getAdjacentKeyPoints(keypoints, minConfidence);
 
   adjacentKeyPoints.forEach(keypoints => {
-    drawSegment(
-      toTuple(keypoints[0].position),
-      toTuple(keypoints[1].position),
-      color,
-      scale,
-      ctx
-    );
+    drawSegment(toTuple(keypoints[0].position), toTuple(keypoints[1].position), color, scale, ctx);
   });
 }
 
@@ -79,12 +70,7 @@ function drawPoint(ctx, y, x, r, color) {
 function drawBoundingBox(keypoints, ctx) {
   const boundingBox = posenet.getBoundingBox(keypoints);
 
-  ctx.rect(
-    boundingBox.minX,
-    boundingBox.minY,
-    boundingBox.maxX - boundingBox.minX,
-    boundingBox.maxY - boundingBox.minY
-  );
+  ctx.rect(boundingBox.minX, boundingBox.minY, boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY);
 
   ctx.strokeStyle = boundingBoxColor;
   ctx.stroke();
@@ -96,9 +82,7 @@ function drawBoundingBox(keypoints, ctx) {
  */
 async function setupCamera() {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    throw new Error(
-      "Browser API navigator.mediaDevices.getUserMedia not available"
-    );
+    throw new Error("Browser API navigator.mediaDevices.getUserMedia not available");
   }
 
   const video = document.getElementById("video");
@@ -194,9 +178,7 @@ async function start() {
   try {
     video = await loadVideo();
   } catch (e) {
-    alert(
-      "this browser does not support video capture, or this device does not have a camera"
-    );
+    alert("this browser does not support video capture, or this device does not have a camera");
   }
 
   $("#loader").removeClass("active");
@@ -204,10 +186,7 @@ async function start() {
   detectPoseInRealTime(video, net);
 }
 
-navigator.getUserMedia =
-  navigator.getUserMedia ||
-  navigator.webkitGetUserMedia ||
-  navigator.mozGetUserMedia;
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 start();
 
@@ -276,10 +255,5 @@ function restart() {
 }
 
 function checkCollision(ball, paddle) {
-  return (
-    ball.y >= paddle.y &&
-    ball.y <= paddle.y + PADDLE_SIZE &&
-    ball.x >= paddle.x &&
-    ball.x <= paddle.x
-  );
+  return ball.y >= paddle.y && ball.y <= paddle.y + PADDLE_SIZE && ball.x >= paddle.x && ball.x <= paddle.x;
 }
