@@ -1,60 +1,61 @@
-
+/* ---- GENERAL STUFF ----- */
 body {
-    font-family: 'Orbitron', sans-serif;
-    background: black;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  main {
-    /* width: 900px; */
-    display: flex;
-    border: 1px solid black;
-    margin-left: 200px;
-  }
+font-family: 'Orbitron', sans-serif;
+background: black;
+color: white;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
 
-  h1 {
-    color: #2779bd;
-    font-size: 50px;
-  }
-  
-  .highscores {
-    width: 300px;
-    margin-left: 1em;
-  }
+main {
+display: flex;
+border: 1px solid black;
+margin-left: 200px;
+}
 
-  .highscores h2 {
-    color: #f0e43f;
-  }
+h1 {
+color: #2779bd;
+font-size: 50px;
+}
 
-  .output-container {
-    position: relative;
+ol {margin-left: -1em; list-style: none; counter-reset: li}
+
+li::before {content: counter(li); color: red;
+display: inline-block; width: 2em;
+margin-left: -1em}
+
+li {counter-increment: li}
+
+/* ---- GAME STUFF ----- */
+
+.highscores {
+width: 300px;
+margin-left: 1em;
+}
+
+.highscores h2 {
+color: #f0e43f;
+}
+
+.output-container {
+position: relative;
+width: 500px;
+height: 300px;
+}
+
+#video {
     width: 500px;
     height: 300px;
-    }
-  
-  ol {margin-left: -1em; list-style: none; counter-reset: li}
-  
-  li::before {content: counter(li); color: red;
-    display: inline-block; width: 2em;
-    margin-left: -1em}
-  
-  li {counter-increment: li}
-  
-  #video {
-      width: 500px;
-      height: 300px;
-      transform: scaleX(-1);
-
-  }
-  #output {
-    border: 1px solid white;
-    position: absolute;
-    top: 0;
-    width:  500px;
-    height: 300px;
     transform: scaleX(-1);
-  }
-  
+
+}
+
+#output {
+border: 1px solid white;
+position: absolute;
+top: 0;
+width:  500px;
+height: 300px;
+transform: scaleX(-1);
+}
