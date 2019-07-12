@@ -1,0 +1,33 @@
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    background: black;
+    color: white;
+  }
+  
+  main {
+    display: flex;
+    border: 1px solid black;
+  }
+  
+  
+  .highscores {
+    width: 500px;
+    margin-left: 1em;
+  }
+  
+  .highscores h1 {
+    color: #f0e43f;
+  }
+  
+  ol {margin-left: -1em; list-style: none; counter-reset: li}
+  
+  li::before {content: counter(li); color: red;
+    display: inline-block; width: 2em;
+    margin-left: -1em}
+  
+  li {counter-increment: li}
+  
+  #game{
+    border: 1px solid white;
+  }
