@@ -1,18 +1,29 @@
 
 <html>
     <head>
+        
         <!-- styles -->
         <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="styles/main.css">
+        
         <!-- scripts -->
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous">
+        </script>
     </head>
     <body>
+        <h1>A(i)r Pong</h1>
         <main>
-            <canvas width="500" height="300" id="game"></canvas>
+            <div class="output-container">
+                    <video id="video" playsinline></video>
+                    <canvas id="output" />
+            </div>
             <div class="highscores">
-              <h1>Highscores</h1>
+              <h2>Highscores</h2>
               <ol>
                 <li>Rover 5 - 10 Mohamed</li>
                 <li>Paulo 10 - 2 Rover</li>
@@ -20,7 +31,9 @@
                 <li>Mohamed 8 - 10 Paulo</li>
             </div>
           </main>
+
           <script src="scripts/main.js"></script>
+          <script src="scripts/pose.js"></script>
     </body>
 </html>
 
