@@ -1,8 +1,8 @@
 const canvas = document.getElementById("output");
 const ctx = canvas.getContext("2d");
 
-const videoWidth = 500;
-const videoHeight = 300;
+const videoWidth = 1200;
+const videoHeight = 800;
 
 const color = "aqua";
 const boundingBoxColor = "red";
