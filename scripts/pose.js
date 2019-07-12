@@ -28,10 +28,19 @@ function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
  * Draws a pose skeleton by looking up all adjacent keypoints/joints
  */
 function drawSkeleton(keypoints, minConfidence, ctx, scale = 1) {
-  const adjacentKeyPoints = posenet.getAdjacentKeyPoints(keypoints, minConfidence);
+  const adjacentKeyPoints = posenet.getAdjacentKeyPoints(
+    keypoints,
+    minConfidence
+  );
 
   adjacentKeyPoints.forEach(keypoints => {
-    drawSegment(toTuple(keypoints[0].position), toTuple(keypoints[1].position), color, scale, ctx);
+    drawSegment(
+      toTuple(keypoints[0].position),
+      toTuple(keypoints[1].position),
+      color,
+      scale,
+      ctx
+    );
   });
 }
 
@@ -70,7 +79,12 @@ function drawPoint(ctx, y, x, r, color) {
 function drawBoundingBox(keypoints, ctx) {
   const boundingBox = posenet.getBoundingBox(keypoints);
 
-  ctx.rect(boundingBox.minX, boundingBox.minY, boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY);
+  ctx.rect(
+    boundingBox.minX,
+    boundingBox.minY,
+    boundingBox.maxX - boundingBox.minX,
+    boundingBox.maxY - boundingBox.minY
+  );
 
   ctx.strokeStyle = boundingBoxColor;
   ctx.stroke();
@@ -82,7 +96,9 @@ function drawBoundingBox(keypoints, ctx) {
  */
 async function setupCamera() {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    throw new Error("Browser API navigator.mediaDevices.getUserMedia not available");
+    throw new Error(
+      "Browser API navigator.mediaDevices.getUserMedia not available"
+    );
   }
 
   const video = document.getElementById("video");
@@ -178,7 +194,9 @@ async function start() {
   try {
     video = await loadVideo();
   } catch (e) {
-    alert("this browser does not support video capture, or this device does not have a camera");
+    alert(
+      "this browser does not support video capture, or this device does not have a camera"
+    );
   }
 
   $("#loader").removeClass("active");
@@ -186,6 +204,82 @@ async function start() {
   detectPoseInRealTime(video, net);
 }
 
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+navigator.getUserMedia =
+  navigator.getUserMedia ||
+  navigator.webkitGetUserMedia ||
+  navigator.mozGetUserMedia;
 
 start();
+
+// HERE WE GO
+const PADDLE_SIZE = 100;
+
+let x = Math.random() * canvas.width;
+let y = Math.random() * canvas.height;
+let dx = 1;
+let dy = 1;
+
+const speed = 0.5;
+
+const paddle1 = {
+  x: 40,
+  y: 20
+};
+
+const paddle2 = {
+  x: canvas.width - 40,
+  y: 20
+};
+
+setInterval(() => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(x, y, 5, 5);
+  drawMidline();
+  drawPaddle(paddle1);
+  drawPaddle(paddle2);
+}, 16);
+
+setInterval(() => {
+  moveBall();
+}, speed);
+
+function drawPaddle({ x, y }) {
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x, y + PADDLE_SIZE);
+  ctx.stroke();
+}
+
+function moveBall() {
+  if (x >= canvas.width) {
+    restart();
+  }
+
+  if (x <= 0) {
+    restart();
+  }
+  if (y >= canvas.height || y <= 0) {
+    dy = -dy;
+  }
+
+  if (checkCollision({ x, y }, paddle1) || checkCollision({ x, y }, paddle2)) {
+    dx = -dx;
+  }
+
+  x = x + speed * dx;
+  y = y + speed * dy;
+}
+
+function restart() {
+  x = canvas.width / 2;
+  y = canvas.height / 2;
+}
+
+function checkCollision(ball, paddle) {
+  return (
+    ball.y >= paddle.y &&
+    ball.y <= paddle.y + PADDLE_SIZE &&
+    ball.x >= paddle.x &&
+    ball.x <= paddle.x
+  );
+}
